@@ -1,0 +1,27 @@
+<div class="row mb-4">
+  <h4>Orders</h4>
+</div>
+<div *ngIf="orders?.length > 0; else noOrders">
+  <div class="row">
+    <div class="col-sm-1">No.</div>
+    <div class="col-sm-8">Products</div>
+    <div class="col-sm-1">Quantity</div>
+    <div class="col-sm-1">Price</div>
+  </div>
+  <hr />
+  <div *ngFor="let items of orders; let i = index" class="row mb-4">
+    <div class="col-sm-1">{{ i + 1 }}</div>
+    <div class="col-sm-11">
+      <div *ngFor="let item of items" class="row">
+        <div class="col-sm-9">
+          <strong>{{ item?.title ? item.title : "No Title" }}</strong>
+        </div>
+        <div class="col-sm-1">{{ item.quantity }}</div>
+        <div class="col-sm-1">{{ item.price }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #noOrders>
+  <p class="textcenter"><strong>There are no previous orders.</strong></p>
+</ng-template>

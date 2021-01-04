@@ -1,0 +1,49 @@
+<div class="row mb-4">
+  <h4>Shopping Cart</h4>
+</div>
+<div *ngIf="cart?.length > 0; else noCart">
+  <div class="row">
+    <div class="col-sm-2">Product</div>
+    <div class="col-sm-6"></div>
+    <div class="col-sm-2">Quantity</div>
+    <div class="col-sm-1">Price</div>
+    <div class="col-sm-1"></div>
+  </div>
+  <hr />
+  <div *ngFor="let item of cart; let i = index" class="row mb-4">
+    <div class="col-sm-2">
+      <img
+        class="img-fluid"
+        [src]="item.image ? item.image : './../../assets/no-image.png'"
+      />
+    </div>
+    <div class="col-sm-6">
+      <strong>{{ item?.title ? item.title : "No Title" }}</strong>
+    </div>
+    <div class="col-sm-2">
+      <input
+        class="form-control"
+        type="number"
+        min="1"
+        value="{{ item?.quantity }}"
+        (input)="quantityChg($event.target.value, i)"
+      />
+    </div>
+    <div class="col-sm-1">{{ item.price }}</div>
+    <div class="col-sm-1">
+      <button (click)="cancelItem(i)" class="btn btn-outline-danger">
+        Delete
+      </button>
+    </div>
+  </div>
+  <hr />
+  <div class="text-right mb-4">
+    <strong>Sub total:</strong> {{ total | currency: "CAD" }}<br />
+    <button (click)="checkOut()" class="btn btn-outline-primary mt-3 pl-4 pr-4">
+      Check out
+    </button>
+  </div>
+</div>
+<ng-template #noCart>
+  <p class="textcenter"><strong>There are no products in your cart.</strong></p>
+</ng-template>

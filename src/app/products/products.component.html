@@ -1,0 +1,51 @@
+<div class="row mb-4">
+  <h4>Products</h4>
+</div>
+<div
+  *ngFor="let item of data; let i = index"
+  [ngClass]="{ selected: item.selected }"
+  class="row mb-1 shop-item"
+>
+  <div class="col-sm-1">
+    <input
+      (input)="eventCheck($event.target.checked, i)"
+      class="form-check-input item-checkbox"
+      type="checkbox"
+    />
+  </div>
+  <div class="col-sm-2">
+    <img
+      class="img-fluid"
+      [src]="item.image ? item.image : './../../assets/no-image.png'"
+    />
+  </div>
+  <div class="col-sm-5">
+    <strong>{{ item.title ? item.title : "No Title" }}</strong>
+  </div>
+  <div class="col-sm-2">
+    <input
+      *ngIf="item.selected"
+      class="form-control"
+      type="number"
+      min="1"
+      value="{{ item.quantity }}"
+      (input)="quantityChg($event.target.value, i)"
+    />
+    <span *ngIf="item.selected" class="float-right text-secondary">QTY</span>
+  </div>
+  <div class="col-sm-2 text-center">
+    {{ item.price ? (item.price | currency: "CAD") : "No price" }}
+  </div>
+</div>
+<div *ngIf="totalPrice > 0">
+  <hr />
+  <div class="text-right mb-4">
+    <strong>Sub total:</strong> {{ totalPrice | currency: "CAD" }}<br />
+    <button
+      (click)="addToCart()"
+      class="btn btn-outline-primary mt-3 pl-4 pr-4"
+    >
+      Add to Cart
+    </button>
+  </div>
+</div>
